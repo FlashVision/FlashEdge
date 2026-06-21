@@ -129,7 +129,8 @@ class INT4Quantizer:
                     x = x.view(x.shape[0], -1)
                 if layer_name not in hessians:
                     hessians[layer_name] = torch.zeros(x.shape[1], device=x.device)
-                hessians[layer_name] += (x ** 2).sum(dim=0)
+                hessians[layer_name] += (x**2).sum(dim=0)
+
             return hook_fn
 
         for name, module in model.named_modules():
@@ -342,7 +343,7 @@ class INT4Quantizer:
             start = g * gs
             end = min(start + gs, out_cols)
             q = quantized[:, start:end].float()
-            result[:, start:end] = q * scales[:, g:g + 1] + zeros[:, g:g + 1]
+            result[:, start:end] = q * scales[:, g : g + 1] + zeros[:, g : g + 1]
 
         return result
 
@@ -377,9 +378,9 @@ class INT4Quantizer:
             flat = w.reshape(w.shape[0], -1)
             tensor = torch.from_numpy(flat.astype(np.float32))
             _, scales, zeros = self._quantize_weight_rtn(tensor)
-            dequantized = self._dequantize(
-                self._quantize_weight_rtn(tensor)[0], scales, zeros
-            ).numpy().reshape(original_shape)
+            dequantized = (
+                self._dequantize(self._quantize_weight_rtn(tensor)[0], scales, zeros).numpy().reshape(original_shape)
+            )
 
             new_init = numpy_helper.from_array(dequantized.astype(np.float32), name=initializer.name)
             initializer.CopyFrom(new_init)
@@ -423,12 +424,14 @@ class INT4Quantizer:
 
             original_bytes += orig
             int4_bytes += compressed
-            layer_details.append({
-                "name": name,
-                "original_kb": orig / 1024,
-                "int4_kb": compressed / 1024,
-                "ratio": orig / max(compressed, 1),
-            })
+            layer_details.append(
+                {
+                    "name": name,
+                    "original_kb": orig / 1024,
+                    "int4_kb": compressed / 1024,
+                    "ratio": orig / max(compressed, 1),
+                }
+            )
 
         return {
             "original_size_mb": original_bytes / (1024 * 1024),

@@ -54,8 +54,7 @@ class FlashEdge:
                     if isinstance(model_data, nn.Module):
                         return model_data.to(device).eval()
                     raise ValueError(
-                        f"Checkpoint contains '{key}' but it's a state_dict. "
-                        "Provide the model architecture separately."
+                        f"Checkpoint contains '{key}' but it's a state_dict. Provide the model architecture separately."
                     )
 
         raise ValueError("Cannot load model — provide an nn.Module or a checkpoint containing the full model.")

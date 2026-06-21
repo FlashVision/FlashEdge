@@ -131,8 +131,7 @@ class DeviceBenchmark:
         if isinstance(device_profile, str):
             if device_profile not in DEVICE_PROFILES:
                 raise ValueError(
-                    f"Unknown device profile '{device_profile}'. "
-                    f"Available: {list(DEVICE_PROFILES.keys())}"
+                    f"Unknown device profile '{device_profile}'. Available: {list(DEVICE_PROFILES.keys())}"
                 )
             self.profile = DEVICE_PROFILES[device_profile].copy()
             self.device_name = device_profile
@@ -335,14 +334,14 @@ class DeviceBenchmark:
                 "Model is memory-bandwidth limited. Quantization (INT8/INT4) will help more than FLOPs reduction."
             )
         if model_size_mb > 50:
-            recommendations.append(
-                f"Model is {model_size_mb:.1f} MB. For edge, target <20 MB with quantization."
-            )
+            recommendations.append(f"Model is {model_size_mb:.1f} MB. For edge, target <20 MB with quantization.")
         if not recommendations:
             recommendations.append("Model appears suitable for deployment on this device.")
 
         print(f"  Deployment feasibility on {self.profile.get('name', self.device_name)}:")
-        print(f"  Memory: {'OK' if fits_in_memory else 'FAIL'} ({model_size_mb:.1f} MB model, {available_ram_mb:.0f} MB device)")
+        print(
+            f"  Memory: {'OK' if fits_in_memory else 'FAIL'} ({model_size_mb:.1f} MB model, {available_ram_mb:.0f} MB device)"
+        )
         print(f"  Realtime: {'OK' if meets_realtime else 'FAIL'} ({latency_info['fps']:.1f} FPS estimated)")
 
         return {
@@ -381,7 +380,9 @@ class DeviceBenchmark:
         model_size_mb = self._get_model_size(model)
         model_size_bytes = model_size_mb * 1024 * 1024
 
-        print(f"  Comparing {len(device_names)} devices (model: {total_flops / 1e6:.1f} MFLOPs, {model_size_mb:.1f} MB)")
+        print(
+            f"  Comparing {len(device_names)} devices (model: {total_flops / 1e6:.1f} MFLOPs, {model_size_mb:.1f} MB)"
+        )
 
         results: List[Dict[str, Any]] = []
         for name in device_names:
@@ -402,21 +403,25 @@ class DeviceBenchmark:
             available_ram_mb = float(profile["ram_gb"]) * 1024
             feasible = (model_size_mb * 2.5 < available_ram_mb * 0.7) and (latency_ms <= 33.33)
 
-            results.append({
-                "device_name": name,
-                "device_label": profile["name"],
-                "latency_ms": latency_ms,
-                "fps": 1000.0 / latency_ms if latency_ms > 0 else 0.0,
-                "power_watts": power_watts,
-                "feasible": feasible,
-                "bottleneck": "compute" if compute_ms >= memory_ms else "memory",
-            })
+            results.append(
+                {
+                    "device_name": name,
+                    "device_label": profile["name"],
+                    "latency_ms": latency_ms,
+                    "fps": 1000.0 / latency_ms if latency_ms > 0 else 0.0,
+                    "power_watts": power_watts,
+                    "feasible": feasible,
+                    "bottleneck": "compute" if compute_ms >= memory_ms else "memory",
+                }
+            )
 
         results.sort(key=lambda x: x["latency_ms"])
 
         for r in results:
             status = "OK" if r["feasible"] else "--"
-            print(f"  [{status}] {r['device_label']:<45} {r['latency_ms']:>8.2f} ms  {r['fps']:>7.1f} FPS  {r['power_watts']:.1f}W")
+            print(
+                f"  [{status}] {r['device_label']:<45} {r['latency_ms']:>8.2f} ms  {r['fps']:>7.1f} FPS  {r['power_watts']:.1f}W"
+            )
 
         return results
 

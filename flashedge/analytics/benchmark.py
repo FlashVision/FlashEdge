@@ -6,7 +6,6 @@ from pathlib import Path
 from typing import Any, Dict, Tuple
 
 
-
 class Benchmark:
     """Benchmark and compare models across formats, quantization levels, and devices.
 
@@ -69,10 +68,7 @@ class Benchmark:
         print("\n" + "=" * 90)
         print("  FlashEdge Benchmark Report")
         print("=" * 90)
-        print(
-            f"  {'Model':<20} {'Size (MB)':<12} {'Mean (ms)':<12} {'P95 (ms)':<12} "
-            f"{'P99 (ms)':<12} {'FPS':<10}"
-        )
+        print(f"  {'Model':<20} {'Size (MB)':<12} {'Mean (ms)':<12} {'P95 (ms)':<12} {'P99 (ms)':<12} {'FPS':<10}")
         print("-" * 90)
 
         for name, metrics in results.items():
@@ -92,7 +88,9 @@ class Benchmark:
                 size_ratio = other["file_size_mb"] / baseline["file_size_mb"]
                 speed_ratio = baseline["mean_ms"] / other["mean_ms"]
                 print(f"\n  {name} vs {names[0]}:")
-                print(f"    Size:    {size_ratio:.2f}x ({'-' if size_ratio < 1 else '+'}{abs(1 - size_ratio) * 100:.1f}%)")
+                print(
+                    f"    Size:    {size_ratio:.2f}x ({'-' if size_ratio < 1 else '+'}{abs(1 - size_ratio) * 100:.1f}%)"
+                )
                 print(f"    Speed:   {speed_ratio:.2f}x {'faster' if speed_ratio > 1 else 'slower'}")
 
     def to_csv(self, results: Dict[str, Dict[str, Any]], output_path: str) -> str:

@@ -122,18 +122,24 @@ class ModelCheckpoint:
             if improved:
                 self.best_value = current
                 path = self.save_dir / "best.pth"
-                torch.save({
-                    "model": model.state_dict(),
-                    "epoch": epoch,
-                    "metrics": metrics,
-                }, str(path))
+                torch.save(
+                    {
+                        "model": model.state_dict(),
+                        "epoch": epoch,
+                        "metrics": metrics,
+                    },
+                    str(path),
+                )
                 return str(path)
             return None
         else:
             path = self.save_dir / f"epoch_{epoch:04d}.pth"
-            torch.save({
-                "model": model.state_dict(),
-                "epoch": epoch,
-                "metrics": metrics,
-            }, str(path))
+            torch.save(
+                {
+                    "model": model.state_dict(),
+                    "epoch": epoch,
+                    "metrics": metrics,
+                },
+                str(path),
+            )
             return str(path)

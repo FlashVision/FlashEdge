@@ -41,20 +41,24 @@ class MBConvBlock(nn.Module):
         layers: list = []
 
         if expand_ratio != 1:
-            layers.extend([
-                nn.Conv2d(in_channels, mid_channels, 1, bias=False),
-                nn.BatchNorm2d(mid_channels),
-                nn.ReLU6(inplace=True),
-            ])
+            layers.extend(
+                [
+                    nn.Conv2d(in_channels, mid_channels, 1, bias=False),
+                    nn.BatchNorm2d(mid_channels),
+                    nn.ReLU6(inplace=True),
+                ]
+            )
 
         padding = (kernel_size - 1) // 2
-        layers.extend([
-            nn.Conv2d(mid_channels, mid_channels, kernel_size, stride, padding, groups=mid_channels, bias=False),
-            nn.BatchNorm2d(mid_channels),
-            nn.ReLU6(inplace=True),
-            nn.Conv2d(mid_channels, out_channels, 1, bias=False),
-            nn.BatchNorm2d(out_channels),
-        ])
+        layers.extend(
+            [
+                nn.Conv2d(mid_channels, mid_channels, kernel_size, stride, padding, groups=mid_channels, bias=False),
+                nn.BatchNorm2d(mid_channels),
+                nn.ReLU6(inplace=True),
+                nn.Conv2d(mid_channels, out_channels, 1, bias=False),
+                nn.BatchNorm2d(out_channels),
+            ]
+        )
 
         self.block = nn.Sequential(*layers)
 

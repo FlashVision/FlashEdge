@@ -118,7 +118,6 @@ class ExecuTorchExporter:
     def _apply_optimizations(self, exported_program: Any) -> Any:
         """Apply graph optimisations to the exported program."""
         try:
-
             print("  Applying graph optimisations...")
             gm = exported_program.graph_module
             gm.graph.eliminate_dead_code()
@@ -131,7 +130,10 @@ class ExecuTorchExporter:
         """Apply post-export quantisation via ExecuTorch's quantiser APIs."""
         try:
             from torch.ao.quantization.quantize_pt2e import prepare_pt2e, convert_pt2e
-            from torch.ao.quantization.quantizer.xnnpack_quantizer import XNNPACKQuantizer, get_symmetric_quantization_config
+            from torch.ao.quantization.quantizer.xnnpack_quantizer import (
+                XNNPACKQuantizer,
+                get_symmetric_quantization_config,
+            )
 
             print("  Applying post-export quantisation...")
             quantizer = XNNPACKQuantizer().set_global(get_symmetric_quantization_config())

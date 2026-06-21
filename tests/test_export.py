@@ -9,6 +9,8 @@ import pytest
 import torch
 import torch.nn as nn
 
+pytest.importorskip("onnxscript")
+
 
 class SimpleModel(nn.Module):
     """Minimal model for testing exports."""

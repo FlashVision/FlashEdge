@@ -185,12 +185,14 @@ class LatencyProfiler:
         results = []
         for name, times in layer_times.items():
             times_np = np.array(times)
-            results.append({
-                "layer": name,
-                "mean_ms": float(times_np.mean()),
-                "std_ms": float(times_np.std()),
-                "percentage": 0.0,
-            })
+            results.append(
+                {
+                    "layer": name,
+                    "mean_ms": float(times_np.mean()),
+                    "std_ms": float(times_np.std()),
+                    "percentage": 0.0,
+                }
+            )
 
         total = sum(r["mean_ms"] for r in results)
         for r in results:

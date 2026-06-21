@@ -98,7 +98,6 @@ class CoreMLExporter:
     def _add_classifier_config(self, mlmodel: Any, class_labels: List[str]) -> Any:
         """Add classifier configuration to a CoreML model."""
         try:
-
             spec = mlmodel.get_spec()
             classifier_config = spec.description.predictedFeatureName
             if not classifier_config:

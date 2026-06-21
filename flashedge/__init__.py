@@ -9,6 +9,10 @@ from flashedge.solutions.model_optimizer import ModelOptimizer
 from flashedge.solutions.device_profiler import DeviceProfiler
 from flashedge.analytics.benchmark import Benchmark
 
+import flashedge.models  # noqa: F401 — triggers model registration
+import flashedge.export  # noqa: F401 — triggers exporter registration
+import flashedge.optimization  # noqa: F401 — triggers optimizer registration
+
 __all__ = [
     "FlashEdge",
     "Exporter",

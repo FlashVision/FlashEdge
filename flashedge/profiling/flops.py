@@ -39,19 +39,23 @@ class FLOPsCounter:
         def make_hook(name: str, module: nn.Module):
             def hook_fn(mod: nn.Module, inp: Any, out: Any) -> None:
                 flops, macs = self._compute_layer_flops(mod, inp, out)
-                layer_stats.append({
-                    "name": name,
-                    "type": mod.__class__.__name__,
-                    "flops": flops,
-                    "macs": macs,
-                    "output_shape": list(out.shape) if isinstance(out, torch.Tensor) else "N/A",
-                })
+                layer_stats.append(
+                    {
+                        "name": name,
+                        "type": mod.__class__.__name__,
+                        "flops": flops,
+                        "macs": macs,
+                        "output_shape": list(out.shape) if isinstance(out, torch.Tensor) else "N/A",
+                    }
+                )
 
             return hook_fn
 
         for name, module in model.named_modules():
-            if isinstance(module, (nn.Conv2d, nn.Linear, nn.BatchNorm2d, nn.LayerNorm,
-                                   nn.AdaptiveAvgPool2d, nn.AvgPool2d, nn.MaxPool2d)):
+            if isinstance(
+                module,
+                (nn.Conv2d, nn.Linear, nn.BatchNorm2d, nn.LayerNorm, nn.AdaptiveAvgPool2d, nn.AvgPool2d, nn.MaxPool2d),
+            ):
                 hooks.append(module.register_forward_hook(make_hook(name, module)))
 
         dummy = torch.randn(*input_shape)
@@ -206,8 +210,6 @@ class FLOPsCounter:
         ]
 
         for layer in result["per_layer"]:
-            lines.append(
-                f"{layer['name']:<40} {layer['type']:<15} {self._format_count(layer['flops']):<15}"
-            )
+            lines.append(f"{layer['name']:<40} {layer['type']:<15} {self._format_count(layer['flops']):<15}")
 
         return "\n".join(lines)

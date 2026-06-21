@@ -59,7 +59,7 @@ class TinyAttention(nn.Module):
         super().__init__()
         self.num_heads = num_heads
         self.head_dim = dim // num_heads
-        self.scale = self.head_dim ** -0.5
+        self.scale = self.head_dim**-0.5
 
         self.qkv = nn.Linear(dim, dim * 3, bias=qkv_bias)
         self.attn_drop = nn.Dropout(attn_drop)
@@ -146,15 +146,17 @@ class TinyViT(nn.Module):
         self.pos_embed = nn.Parameter(torch.zeros(1, num_patches + 1, embed_dim))
         self.pos_drop = nn.Dropout(drop_rate)
 
-        self.blocks = nn.Sequential(*[
-            TinyTransformerBlock(
-                dim=embed_dim,
-                num_heads=num_heads,
-                mlp_ratio=mlp_ratio,
-                drop=drop_rate,
-            )
-            for _ in range(depth)
-        ])
+        self.blocks = nn.Sequential(
+            *[
+                TinyTransformerBlock(
+                    dim=embed_dim,
+                    num_heads=num_heads,
+                    mlp_ratio=mlp_ratio,
+                    drop=drop_rate,
+                )
+                for _ in range(depth)
+            ]
+        )
 
         self.norm = nn.LayerNorm(embed_dim)
         self.head = nn.Linear(embed_dim, num_classes)
@@ -180,12 +182,16 @@ class TinyViT(nn.Module):
         x = torch.cat([cls_tokens, x], dim=1)
 
         if x.shape[1] != self.pos_embed.shape[1]:
-            pos = F.interpolate(
-                self.pos_embed.transpose(1, 2).unsqueeze(0),
-                size=x.shape[1],
-                mode="linear",
-                align_corners=False,
-            ).squeeze(0).transpose(1, 2)
+            pos = (
+                F.interpolate(
+                    self.pos_embed.transpose(1, 2).unsqueeze(0),
+                    size=x.shape[1],
+                    mode="linear",
+                    align_corners=False,
+                )
+                .squeeze(0)
+                .transpose(1, 2)
+            )
             x = x + pos
         else:
             x = x + self.pos_embed

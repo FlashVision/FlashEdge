@@ -71,10 +71,7 @@ class PowerEstimator:
         elif device_type in DEVICE_PROFILES:
             self.profile = DEVICE_PROFILES[device_type].copy()
         else:
-            raise ValueError(
-                f"Unknown device_type '{device_type}'. "
-                f"Available: {list(DEVICE_PROFILES.keys())}"
-            )
+            raise ValueError(f"Unknown device_type '{device_type}'. Available: {list(DEVICE_PROFILES.keys())}")
 
         if tdp_watts is not None:
             self.profile["tdp_watts"] = tdp_watts

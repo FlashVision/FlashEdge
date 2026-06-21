@@ -65,26 +65,32 @@ class InvertedResidual(nn.Module):
         layers: list = []
 
         if expand_ratio != 1:
-            layers.extend([
-                nn.Conv2d(in_channels, mid_channels, 1, bias=False),
-                nn.BatchNorm2d(mid_channels),
-                act_layer(),
-            ])
+            layers.extend(
+                [
+                    nn.Conv2d(in_channels, mid_channels, 1, bias=False),
+                    nn.BatchNorm2d(mid_channels),
+                    act_layer(),
+                ]
+            )
 
         padding = (kernel_size - 1) // 2
-        layers.extend([
-            nn.Conv2d(mid_channels, mid_channels, kernel_size, stride, padding, groups=mid_channels, bias=False),
-            nn.BatchNorm2d(mid_channels),
-            act_layer(),
-        ])
+        layers.extend(
+            [
+                nn.Conv2d(mid_channels, mid_channels, kernel_size, stride, padding, groups=mid_channels, bias=False),
+                nn.BatchNorm2d(mid_channels),
+                act_layer(),
+            ]
+        )
 
         if use_se:
             layers.append(SqueezeExcite(mid_channels))
 
-        layers.extend([
-            nn.Conv2d(mid_channels, out_channels, 1, bias=False),
-            nn.BatchNorm2d(out_channels),
-        ])
+        layers.extend(
+            [
+                nn.Conv2d(mid_channels, out_channels, 1, bias=False),
+                nn.BatchNorm2d(out_channels),
+            ]
+        )
 
         self.block = nn.Sequential(*layers)
 

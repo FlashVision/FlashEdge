@@ -48,8 +48,7 @@ class TFLiteInferenceSession:
             return tf.lite.Interpreter(model_path=model_path, num_threads=num_threads)
         except ImportError:
             raise ImportError(
-                "TFLite inference requires either tflite-runtime or tensorflow: "
-                "pip install flashedge[tflite]"
+                "TFLite inference requires either tflite-runtime or tensorflow: pip install flashedge[tflite]"
             )
 
     def predict(

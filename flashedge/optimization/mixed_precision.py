@@ -238,13 +238,15 @@ class MixedPrecisionOptimizer:
             size = numel * module.weight.element_size()
             total_params += numel
             total_size += size
-            layers.append({
-                "name": name,
-                "type": module.__class__.__name__,
-                "params": numel,
-                "size_kb": size / 1024,
-                "candidate_bits": list(self.candidate_bits),
-            })
+            layers.append(
+                {
+                    "name": name,
+                    "type": module.__class__.__name__,
+                    "params": numel,
+                    "size_kb": size / 1024,
+                    "candidate_bits": list(self.candidate_bits),
+                }
+            )
 
         compressed = {}
         for bits in self.candidate_bits:
