@@ -1,0 +1,56 @@
+# FlashEdge Docker Compose
+# Usage: docker compose -f docker/docker-compose.yml up
+
+version: "3.8"
+
+services:
+  flashedge:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    image: flashedge:latest
+    container_name: flashedge
+    volumes:
+      - ../data:/app/data
+      - ../pretrained:/app/pretrained
+      - ../exported:/app/exported
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+    environment:
+      - NVIDIA_VISIBLE_DEVICES=all
+    command: ["--help"]
+
+  flashedge-export:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    image: flashedge:latest
+    container_name: flashedge-export
+    volumes:
+      - ../data:/app/data
+      - ../pretrained:/app/pretrained
+      - ../exported:/app/exported
+    command: ["export", "--config", "configs/flashedge_onnx_mobile.yaml"]
+
+  flashedge-benchmark:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    image: flashedge:latest
+    container_name: flashedge-benchmark
+    volumes:
+      - ../data:/app/data
+      - ../exported:/app/exported
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+    command: ["benchmark", "--model", "exported/model_mobile.onnx", "--device", "cpu"]

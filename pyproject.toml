@@ -1,0 +1,71 @@
+[build-system]
+requires = ["setuptools>=70.0.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "flashedge"
+version = "1.0.0"
+description = "FlashEdge: Edge AI & TinyML toolkit — on-device inference, model compression, mobile deployment, and IoT integration"
+readme = "README.md"
+requires-python = ">=3.8"
+license = {text = "MIT"}
+authors = [
+    {name = "FlashVision"},
+]
+keywords = ["edge-ai", "tinyml", "onnx", "tflite", "coreml", "openvino", "model-compression", "quantization", "pruning", "mobile-deployment"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+dependencies = [
+    "torch>=2.0.0",
+    "torchvision>=0.15.0",
+    "numpy>=1.24.0",
+    "PyYAML>=6.0",
+    "tqdm>=4.65.0",
+    "onnx>=1.14.0",
+    "onnxruntime>=1.15.0",
+]
+
+[project.optional-dependencies]
+tflite = ["tflite-runtime>=2.14.0"]
+openvino = ["openvino>=2023.1.0"]
+coreml = ["coremltools>=7.0"]
+analytics = ["matplotlib>=3.7.0", "pandas>=2.0.0"]
+all = [
+    "tflite-runtime>=2.14.0",
+    "openvino>=2023.1.0",
+    "coremltools>=7.0",
+    "matplotlib>=3.7.0",
+    "pandas>=2.0.0",
+    "onnxsim>=0.4.0",
+]
+dev = ["pytest>=7.0.0", "ruff>=0.1.0", "pre-commit>=3.0.0"]
+
+[project.urls]
+Homepage = "https://github.com/FlashVision/FlashEdge"
+Repository = "https://github.com/FlashVision/FlashEdge"
+Issues = "https://github.com/FlashVision/FlashEdge/issues"
+
+[project.scripts]
+flashedge = "flashedge.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["flashedge*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-v --tb=short"
+filterwarnings = ["ignore::DeprecationWarning"]
+
+[tool.ruff]
+line-length = 120

@@ -1,0 +1,26 @@
+# FlashEdge — TFLite Export Configuration
+
+model:
+  path: "pretrained/model.pth"
+  architecture: "mobilenetv3_small"
+  num_classes: 1000
+
+export:
+  format: "tflite"
+  output: "exported/model.tflite"
+  input_shape: [1, 3, 224, 224]
+  quantize: true
+  quantization_dtype: "int8"
+  representative_dataset: "data/calibration/"
+  num_calibration_samples: 200
+
+optimization:
+  optimize_for_size: true
+  target_ops:
+    - "TFLITE_BUILTINS"
+
+profiling:
+  enabled: true
+  device: "cpu"
+  warmup_runs: 5
+  benchmark_runs: 50

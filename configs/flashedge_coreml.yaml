@@ -1,0 +1,23 @@
+# FlashEdge — CoreML Export Configuration
+
+model:
+  path: "pretrained/model.pth"
+  architecture: "mobilenetv3_small"
+  num_classes: 1000
+
+export:
+  format: "coreml"
+  output: "exported/model.mlpackage"
+  input_shape: [1, 3, 224, 224]
+  compute_units: "ALL"
+  minimum_deployment_target: "iOS16"
+  convert_to: "mlprogram"
+  classifier: false
+  class_labels: null
+
+optimization:
+  quantize: false
+  palettize: false
+
+profiling:
+  enabled: false
