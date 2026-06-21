@@ -8,7 +8,7 @@ from __future__ import annotations
 
 import copy
 from pathlib import Path
-from typing import Any, Callable, Dict, List, Optional, Tuple
+from typing import Any, Dict, Optional, Tuple
 
 import numpy as np
 import torch
@@ -113,7 +113,7 @@ class INT8Quantizer:
         Returns:
             Path to the quantized model.
         """
-        from onnxruntime.quantization import quantize_static, quantize_dynamic, CalibrationDataReader, QuantType
+        from onnxruntime.quantization import quantize_static, quantize_dynamic, QuantType
 
         Path(output_path).parent.mkdir(parents=True, exist_ok=True)
 

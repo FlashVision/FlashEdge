@@ -76,7 +76,6 @@ class TestRegistry:
 
 class TestModelsRegistry:
     def test_mobilenet_registered(self):
-        from flashedge.models.architectures.mobilenet import MobileNetV3Small
 
         assert "mobilenetv3_small" in MODELS
         model = MODELS.build("mobilenetv3_small", num_classes=10)
@@ -90,19 +89,16 @@ class TestModelsRegistry:
         assert out.shape == (1, 10)
 
     def test_efficientnet_registered(self):
-        from flashedge.models.architectures.efficientnet import EfficientNetLite
 
         assert "efficientnet_lite" in MODELS
 
     def test_tiny_vit_registered(self):
-        from flashedge.models.architectures.tiny_vit import TinyViT
 
         assert "tiny_vit" in MODELS
 
 
 class TestExportersRegistry:
     def test_exporters_registered(self):
-        from flashedge.export import OnnxExporter, TFLiteExporter, CoreMLExporter, OpenVINOExporter, TorchScriptExporter
 
         assert "onnx" in EXPORTERS
         assert "tflite" in EXPORTERS
@@ -113,15 +109,6 @@ class TestExportersRegistry:
 
 class TestOptimizersRegistry:
     def test_optimizers_registered(self):
-        from flashedge.optimization import (
-            INT8Quantizer,
-            DynamicQuantizer,
-            QATTrainer,
-            StructuredPruner,
-            UnstructuredPruner,
-            KnowledgeDistiller,
-            MobileNAS,
-        )
 
         assert "int8_quantizer" in OPTIMIZERS
         assert "dynamic_quantizer" in OPTIMIZERS

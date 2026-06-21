@@ -8,7 +8,6 @@ installed.
 from __future__ import annotations
 
 import os
-import struct
 import subprocess
 import tempfile
 from pathlib import Path
@@ -88,7 +87,6 @@ class NCNNExporter:
         Returns:
             Path to the generated ``.param`` file.
         """
-        import onnx
 
         model = model.cpu().eval()
         output_prefix = str(Path(output_path).with_suffix(""))
@@ -355,7 +353,7 @@ class NCNNExporter:
         result: Dict[str, Any] = {"valid": False, "layer_count": 0, "blob_count": 0, "layers": []}
         try:
             with open(param_path) as f:
-                lines = [l.strip() for l in f if l.strip()]
+                lines = [ln.strip() for ln in f if ln.strip()]
             if not lines or lines[0] != "7767517":
                 result["error"] = "Missing NCNN magic number"
                 return result

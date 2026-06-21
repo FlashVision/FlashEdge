@@ -3,9 +3,8 @@
 from __future__ import annotations
 
 import hashlib
-import shutil
 from pathlib import Path
-from typing import Any, Dict, Optional, Union
+from typing import Any, Dict, Optional
 from urllib.request import urlretrieve
 
 import torch

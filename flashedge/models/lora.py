@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 import math
-from typing import Dict, List, Optional, Tuple, Type
+from typing import Dict, List, Optional
 
 import torch
 import torch.nn as nn

@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import tempfile
 from pathlib import Path
-from typing import Any, Dict, List, Optional, Tuple
+from typing import Any, Dict, Optional, Tuple
 
 import numpy as np
 import torch
@@ -163,7 +163,7 @@ class TFLiteExporter:
         for initializer in onnx_model.graph.initializer:
             weights[initializer.name] = numpy_helper.to_array(initializer)
 
-        total_params = sum(w.size for w in weights.values())
+        sum(w.size for w in weights.values())
 
         builder = _TFLiteFlatbufferBuilder()
         tflite_bytes = builder.build_from_onnx(onnx_model, weights, input_shape, self.quantize, self.dtype)

@@ -7,9 +7,8 @@ support for iterative pruning, importance scoring, and fine-tuning.
 from __future__ import annotations
 
 import copy
-from typing import Any, Dict, List, Optional, Tuple, Type
+from typing import Any, Dict, Tuple
 
-import torch
 import torch.nn as nn
 import torch.nn.utils.prune as prune
 

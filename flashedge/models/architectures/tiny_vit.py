@@ -6,8 +6,6 @@ with a shallow transformer encoder for efficient edge deployment.
 
 from __future__ import annotations
 
-import math
-from typing import Optional, Tuple
 
 import torch
 import torch.nn as nn

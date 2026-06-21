@@ -6,7 +6,7 @@ operations (MACs) by hooking into each layer's forward pass.
 
 from __future__ import annotations
 
-from typing import Any, Dict, List, Optional, Tuple
+from typing import Any, Dict, List, Tuple
 
 import torch
 import torch.nn as nn
@@ -196,7 +196,7 @@ class FLOPsCounter:
         """
         result = self.count(model, input_shape)
         lines = [
-            f"FLOPs Summary",
+            "FLOPs Summary",
             f"{'=' * 70}",
             f"Total FLOPs: {result['flops_str']}",
             f"Total MACs:  {result['macs_str']}",

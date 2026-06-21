@@ -9,7 +9,7 @@ from __future__ import annotations
 
 import copy
 from pathlib import Path
-from typing import Any, Dict, List, Optional, Tuple
+from typing import Any, Dict, Optional, Tuple
 
 import torch
 import torch.nn as nn
@@ -118,7 +118,6 @@ class ExecuTorchExporter:
     def _apply_optimizations(self, exported_program: Any) -> Any:
         """Apply graph optimisations to the exported program."""
         try:
-            from torch._export import passes
 
             print("  Applying graph optimisations...")
             gm = exported_program.graph_module
@@ -268,7 +267,7 @@ class ExecuTorchExporter:
         elif path.suffix == ".pte":
             result["format"] = "executorch"
             try:
-                from executorch.runtime import Runtime, Program
+                from executorch.runtime import Runtime
 
                 runtime = Runtime.get()
                 program = runtime.load_program(str(path))

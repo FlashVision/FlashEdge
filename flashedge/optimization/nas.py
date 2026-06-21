@@ -8,10 +8,8 @@ from __future__ import annotations
 
 import random
 from dataclasses import dataclass, field
-from typing import Any, Callable, Dict, List, Optional, Tuple
+from typing import Any, Callable, Dict, List, Optional
 
-import torch
-import torch.nn as nn
 
 from flashedge.registry import OPTIMIZERS
 

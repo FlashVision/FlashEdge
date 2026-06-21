@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from pathlib import Path
-from typing import Any, Dict, Optional, Tuple, Union
+from typing import Any, Dict, Tuple, Union
 
 import torch.nn as nn
 
@@ -109,7 +109,7 @@ class DeviceProfiler:
 
         if "latency" in report:
             lat = report["latency"]
-            print(f"\n  Latency:")
+            print("\n  Latency:")
             print(f"    Mean:       {lat['mean_ms']:.3f} ms")
             print(f"    P50:        {lat.get('p50_ms', 0):.3f} ms")
             print(f"    P95:        {lat.get('p95_ms', 0):.3f} ms")
@@ -118,14 +118,14 @@ class DeviceProfiler:
 
         if "memory" in report:
             mem = report["memory"]
-            print(f"\n  Memory:")
+            print("\n  Memory:")
             print(f"    Parameters: {mem['num_parameters']:,}")
             print(f"    Model size: {mem['model_size_mb']:.2f} MB")
             print(f"    Peak memory:{mem['peak_memory_mb']:.2f} MB")
 
         if "flops" in report:
             fl = report["flops"]
-            print(f"\n  Compute:")
+            print("\n  Compute:")
             print(f"    FLOPs: {fl['flops_str']}")
             print(f"    MACs:  {fl['macs_str']}")
 
@@ -138,7 +138,7 @@ class DeviceProfiler:
 
         if "file_info" in report:
             fi = report["file_info"]
-            print(f"\n  File:")
+            print("\n  File:")
             print(f"    Size: {fi['file_size_mb']:.2f} MB")
 
         print("\n" + "=" * 60)

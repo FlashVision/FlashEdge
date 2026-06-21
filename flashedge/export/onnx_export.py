@@ -2,9 +2,8 @@
 
 from __future__ import annotations
 
-import tempfile
 from pathlib import Path
-from typing import Any, Dict, List, Optional, Sequence, Tuple, Union
+from typing import Any, Dict, List, Optional, Tuple
 
 import numpy as np
 import torch
@@ -103,7 +102,6 @@ class OnnxExporter:
 
     def _optimize_graph(self, model: Any) -> Any:
         """Apply ONNX graph optimizations (constant folding, shape inference)."""
-        import onnx
         from onnx import shape_inference
 
         model = shape_inference.infer_shapes(model)

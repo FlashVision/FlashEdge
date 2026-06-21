@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import tempfile
 from pathlib import Path
-from typing import Any, Dict, Optional, Tuple
+from typing import Tuple
 
 import torch
 import torch.nn as nn
@@ -48,8 +48,7 @@ class OpenVINOExporter:
             Path to the output directory.
         """
         try:
-            from openvino.tools import mo
-            from openvino.runtime import Core
+            from openvino.tools import mo  # noqa: F401
         except ImportError:
             raise ImportError("OpenVINO export requires openvino: pip install flashedge[openvino]")
 
