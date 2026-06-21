@@ -5,6 +5,8 @@ from flashedge.export.tflite_export import TFLiteExporter
 from flashedge.export.coreml_export import CoreMLExporter
 from flashedge.export.openvino_export import OpenVINOExporter
 from flashedge.export.torchscript import TorchScriptExporter
+from flashedge.export.ncnn_export import NCNNExporter
+from flashedge.export.executorch_export import ExecuTorchExporter
 
 __all__ = [
     "OnnxExporter",
@@ -12,4 +14,6 @@ __all__ = [
     "CoreMLExporter",
     "OpenVINOExporter",
     "TorchScriptExporter",
+    "NCNNExporter",
+    "ExecuTorchExporter",
 ]
